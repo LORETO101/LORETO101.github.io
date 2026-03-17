@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Loreto Gómez Arias — Senior AI Architect. 10+ years designing AI/ML, MLOps and GenAI solutions across Azure, AWS and GCP.">
+    <meta property="og:title" content="Loreto Gómez Arias — Senior AI Architect">
+    <meta property="og:description" content="Bridging business strategy with cutting-edge AI technology">
+    <meta property="og:type" content="website">
+    <title>Loreto Gómez Arias — Senior AI Architect</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <style>
+        :root {
+            --bg-page: #f5f1eb;
+            --bg-card: #ffffff;
+            --bg-card-alt: #faf8f4;
+            --bg-elevated: #f0ece4;
+            --bg-tag: #eee9e0;
+            --text-primary: #1a1a1a;
+            --text-secondary: #5a5a52;
+            --text-muted: #8a8a7e;
+            --accent: #2d6a4f;
+            --accent-light: #40916c;
+            --accent-bg: rgba(45,106,79,0.08);
+            --accent-warm: #b5860a;
+            --accent-warm-bg: rgba(181,134,10,0.08);
+            --accent-orange: #c4650a;
+            --accent-orange-bg: rgba(196,101,10,0.06);
+            --accent-blue: #2563eb;
+            --accent-blue-bg: rgba(37,99,235,0.06);
+            --border: rgba(0,0,0,0.08);
+            --border-accent: rgba(45,106,79,0.2);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+            --font-display: 'Syne', sans-serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        body { font-family: var(--font-body); background: var(--bg-page); color: var(--text-primary); line-height: 1.7; font-weight: 400; overflow-x: hidden; }
+
+        /* NAV */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; background: rgba(245,241,235,0.9); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+        .nav-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; color: var(--text-primary); text-decoration: none; }
+        .nav-logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.3s; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--accent); transition: width 0.3s; border-radius: 1px; }
+        .nav-links a:hover { color: var(--text-primary); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+        .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text-primary); margin: 5px 0; transition: 0.3s; border-radius: 1px; }
+
+        /* HERO */
+        .hero { min-height: 100vh; display: flex; align-items: center; position: relative; padding: 8rem 2rem 4rem; overflow: hidden; }
+        .hero-content { max-width: 1200px; margin: 0 auto; width: 100%; position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto; gap: 4rem; align-items: center; }
+        .hero-text { max-width: 660px; }
+        .hero-label { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s 0.2s forwards; }
+        .hero-label::before { content: ''; width: 32px; height: 2px; background: var(--accent); border-radius: 1px; }
+        .hero h1 { font-family: var(--font-display); font-size: clamp(2.6rem, 5.5vw, 5rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem; color: var(--text-primary); opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
+        .hero h1 .line-accent { background: linear-gradient(135deg, var(--accent), var(--accent-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero-description { max-width: 540px; font-size: 1.1rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 2.5rem; opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
+        .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.8s forwards; }
+        .hero-photo { width: 280px; height: 280px; border-radius: 20px; object-fit: cover; object-position: center top; border: 4px solid var(--bg-card); box-shadow: var(--shadow-lg), 0 0 0 1px var(--border); opacity: 0; animation: fadeUp 0.8s 0.6s forwards; }
+        .hero-stats { display: flex; gap: 2rem; margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border); opacity: 0; animation: fadeUp 0.8s 1s forwards; grid-column: 1 / -1; }
+        .stat-item { padding: 1.25rem 1.5rem; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); flex: 1; }
+        .stat-number { font-family: var(--font-display); font-size: 2rem; font-weight: 700; line-height: 1; color: var(--accent); }
+        .stat-label { font-size: 0.78rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 0.3rem; }
+
+        /* BUTTONS */
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.8rem; font-family: var(--font-body); font-size: 0.9rem; font-weight: 600; border-radius: 10px; text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: #245a42; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(45,106,79,0.25); }
+        .btn-outline { background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* SECTIONS */
+        section { padding: 5rem 2rem; }
+        .section-container { max-width: 1200px; margin: 0 auto; }
+        .section-header { margin-bottom: 3rem; }
+        .section-tag { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+        .section-icon { width: 18px; height: 18px; opacity: 0.7; }
+        .section-title { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: var(--text-primary); }
+        .section-title em { font-style: italic; color: var(--accent); }
+        .section-subtitle { color: var(--text-secondary); font-size: 1rem; max-width: 600px; margin-top: 0.75rem; }
+
+        /* ABOUT */
+        .about { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+        .about-text p { color: var(--text-secondary); margin-bottom: 1.25rem; font-size: 1rem; }
+        .about-highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .highlight-card { padding: 1.25rem; background: var(--bg-card-alt); border-radius: 12px; border: 1px solid var(--border); border-top: 3px solid var(--accent); transition: transform 0.3s, box-shadow 0.3s; }
+        .highlight-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .highlight-card:nth-child(2) { border-top-color: var(--accent-warm); }
+        .highlight-card:nth-child(3) { border-top-color: var(--accent-orange); }
+        .highlight-card:nth-child(4) { border-top-color: var(--accent-blue); }
+        .highlight-card h4 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; margin-bottom: 0.15rem; color: var(--accent); }
+        .highlight-card:nth-child(2) h4 { color: var(--accent-warm); }
+        .highlight-card:nth-child(3) h4 { color: var(--accent-orange); }
+        .highlight-card:nth-child(4) h4 { color: var(--accent-blue); }
+        .highlight-card p { font-size: 0.82rem; color: var(--text-muted); margin: 0; text-transform: uppercase; letter-spacing: 0.03em; }
+
+        /* TECH STACK */
+        .tech-categories { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .tech-category { padding: 2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow-sm); transition: transform 0.3s, box-shadow 0.3s; }
+        .tech-category:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .tech-cat-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
+        .tech-cat-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .tech-category:nth-child(1) .tech-cat-icon { background: var(--accent-bg); color: var(--accent); }
+        .tech-category:nth-child(2) .tech-cat-icon { background: var(--accent-blue-bg); color: var(--accent-blue); }
+        .tech-category:nth-child(3) .tech-cat-icon { background: var(--accent-warm-bg); color: var(--accent-warm); }
+        .tech-category:nth-child(4) .tech-cat-icon { background: var(--accent-orange-bg); color: var(--accent-orange); }
+        .tech-cat-header h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; }
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+        .tech-tag { padding: 0.35rem 0.75rem; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 6px; font-size: 0.8rem; color: var(--text-secondary); transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.4rem; }
+        .tech-tag:hover { color: var(--text-primary); border-color: var(--accent); background: var(--accent-bg); }
+        .tech-tag i { font-size: 1rem; line-height: 1; }
+
+        /* EXPERIENCE */
+        .experience { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .timeline-items { position: relative; padding-left: 2rem; }
+        .timeline-items::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--accent), var(--accent-warm), var(--bg-elevated)); border-radius: 2px; }
+        .timeline-item { position: relative; padding: 0 0 2.5rem 2rem; }
+        .timeline-item::before { content: ''; position: absolute; left: -2rem; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 3px solid var(--bg-card); transform: translateX(-4px); box-shadow: 0 0 0 3px rgba(45,106,79,0.12); }
+        .timeline-item:last-child { padding-bottom: 0; }
+        .timeline-date { font-size: 0.78rem; color: var(--accent); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.3rem; }
+        .timeline-role { font-family: var(--font-display); font-size: 1.15rem; font-weight: 600; margin-bottom: 0.1rem; }
+        .timeline-company { color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 0.65rem; font-style: italic; }
+        .timeline-details { color: var(--text-muted); font-size: 0.88rem; line-height: 1.7; }
+        .timeline-details strong { color: var(--text-secondary); font-weight: 600; }
+        .timeline-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.75rem; }
+        .timeline-tag { padding: 0.2rem 0.6rem; font-size: 0.72rem; background: var(--accent-bg); color: var(--accent); border-radius: 5px; font-weight: 600; }
+
+        /* EDUCATION */
+        .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        .edu-card { padding: 1.75rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow-sm); transition: transform 0.3s, box-shadow 0.3s; }
+        .edu-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .edu-year { font-size: 0.75rem; color: var(--accent); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.4rem; }
+        .edu-card h3 { font-family: var(--font-display); font-size: 0.98rem; font-weight: 600; margin-bottom: 0.2rem; }
+        .edu-card p { font-size: 0.85rem; color: var(--text-secondary); }
+        .certs-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; margin: 3rem 0 1.25rem; }
+        .certs-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .cert-badge { padding: 0.5rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; font-size: 0.8rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; transition: all 0.2s; box-shadow: var(--shadow-sm); }
+        .cert-badge:hover { border-color: var(--accent); color: var(--text-primary); transform: translateY(-1px); }
+        .cert-icon { width: 20px; height: 20px; border-radius: 5px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; flex-shrink: 0; }
+        .cert-aws { background: rgba(181,134,10,0.12); color: var(--accent-warm); }
+        .cert-azure { background: var(--accent-blue-bg); color: var(--accent-blue); }
+        .cert-gcp { background: var(--accent-bg); color: var(--accent); }
+        .cert-ai { background: var(--accent-orange-bg); color: var(--accent-orange); }
+
+        /* PROJECTS */
+        .projects { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+        .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .project-card { padding: 2rem; background: var(--bg-card-alt); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-sm); transition: transform 0.3s, box-shadow 0.3s; }
+        .project-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .project-card h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.2rem; }
+        .project-year { font-size: 0.78rem; color: var(--accent); font-weight: 600; margin-bottom: 1rem; }
+        .project-card ul { list-style: none; padding: 0; }
+        .project-card li { position: relative; padding-left: 1.2rem; color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 0.5rem; }
+        .project-card li::before { content: ''; position: absolute; left: 0; top: 10px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.4; }
+        .project-meta { display: inline-block; margin-top: 0.75rem; padding: 0.4rem 0.8rem; background: var(--accent-bg); border: 1px solid var(--border-accent); border-radius: 6px; font-size: 0.75rem; color: var(--accent); font-weight: 500; font-style: italic; }
+
+        /* CONTACT */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .contact-text h3 { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; margin-bottom: 1rem; }
+        .contact-text > p { color: var(--text-secondary); font-size: 1rem; margin-bottom: 2rem; }
+        .contact-link { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--text-primary); transition: color 0.3s; }
+        .contact-link:hover { color: var(--accent); }
+        .contact-link-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--bg-elevated); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .contact-link-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+        .contact-link-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+        .contact-link-value { font-size: 0.95rem; font-weight: 500; }
+
+        /* CONTACT FORM */
+        .contact-form-wrapper {
+            padding: 2.5rem; border-radius: 16px;
+            background: var(--bg-card-alt);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+        .contact-form-wrapper h4 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 1.25rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 0.8rem 1rem; font-family: var(--font-body); font-size: 0.92rem;
+            background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+            color: var(--text-primary); transition: border-color 0.3s, box-shadow 0.3s; outline: none;
+        }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(45,106,79,0.08); }
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        .form-success { display: none; padding: 1.5rem; text-align: center; }
+        .form-success h4 { color: var(--accent); margin-bottom: 0.5rem; }
+        .form-success p { color: var(--text-secondary); font-size: 0.92rem; }
+
+        /* FOOTER */
+        footer { padding: 2rem; text-align: center; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); }
+
+        /* REVEAL */
+        .reveal-el { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .reveal-el.visible { opacity: 1; transform: translateY(0); }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .hero-content { grid-template-columns: 1fr; }
+            .hero-photo { width: 200px; height: 200px; order: -1; }
+            .about-grid, .edu-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .tech-categories, .projects-grid { grid-template-columns: 1fr; }
+            .hero-stats { gap: 1rem; flex-wrap: wrap; }
+        }
+        @media (max-width: 768px) {
+            section { padding: 3.5rem 1.25rem; }
+            nav { padding: 1rem 1.25rem; }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(245,241,235,0.97); backdrop-filter: blur(20px); padding: 1.5rem 2rem; gap: 1.25rem; border-bottom: 1px solid var(--border); }
+            .nav-links.open { display: flex; }
+            .nav-toggle { display: block; }
+            .hero { padding: 7rem 1.25rem 3rem; min-height: auto; }
+            .hero-stats { flex-direction: column; }
+            .stat-item { text-align: center; }
+            .about-highlights { grid-template-columns: 1fr 1fr; }
+            .hero-ctas { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+            .hero-photo { width: 150px; height: 150px; }
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="#hero" class="nav-logo">L<span>.</span>G<span>.</span>A</a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+</nav>
+
+<section class="hero" id="hero">
+    <div class="hero-content">
+        <div class="hero-text">
+            <div class="hero-label">Senior AI Architect · Madrid</div>
+            <h1>Loreto Gómez<br><span class="line-accent">Arias</span></h1>
+            <p class="hero-description">10+ years designing AI/ML, MLOps and Generative AI solutions across Azure, AWS and GCP. Delivering international projects in cybersecurity, telecom, energy and banking across 15 countries.</p>
+            <div class="hero-ctas">
+                <a href="#contact" class="btn btn-primary">Get in touch →</a>
+                <a href="#experience" class="btn btn-outline">View experience</a>
+            </div>
+        </div>
+        <img src="FOTO_2022.jpg" alt="Loreto Gómez Arias" class="hero-photo">
+        <div class="hero-stats">
+            <div class="stat-item"><div class="stat-number">10+</div><div class="stat-label">Years experience</div></div>
+            <div class="stat-item"><div class="stat-number">15+</div><div class="stat-label">Countries delivered</div></div>
+            <div class="stat-item"><div class="stat-number">6</div><div class="stat-label">Cloud certifications</div></div>
+            <div class="stat-item"><div class="stat-number">3</div><div class="stat-label">Cloud platforms</div></div>
+        </div>
+    </div>
+</section>
+
+<section class="about" id="about">
+    <div class="section-container">
+        <div class="about-grid">
+            <div class="about-text reveal-el">
+                <div class="section-header">
+                    <div class="section-tag"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> About</div>
+                    <h2 class="section-title">Bridging business<br>with <em>AI technology</em></h2>
+                </div>
+                <p>Senior AI Architect with a proven track record designing and leading AI/ML, MLOps, and Generative AI solutions. Experienced in supporting pre-sales and bid activities by defining architectures, assessing technical feasibility, and aligning solutions with business, compliance, and security requirements.</p>
+                <p>Skilled at bridging business and technical execution, defining product roadmaps, managing agile teams, and delivering MVPs that scale to production. Expert in GenAI — including LLMs, RAG, agentic frameworks, and LLMOps — and cloud-native data architectures.</p>
+            </div>
+            <div class="about-highlights reveal-el">
+                <div class="highlight-card"><h4>15</h4><p>Countries served</p></div>
+                <div class="highlight-card"><h4>GenAI</h4><p>LLMs, RAG, Agents</p></div>
+                <div class="highlight-card"><h4>MLOps</h4><p>End-to-end pipelines</p></div>
+                <div class="highlight-card"><h4>Multi-cloud</h4><p>Azure · AWS · GCP</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="stack" id="stack">
+    <div class="section-container">
+        <div class="section-header reveal-el">
+            <div class="section-tag"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> Tech Stack</div>
+            <h2 class="section-title">Tools &amp; <em>technologies</em></h2>
+            <p class="section-subtitle">A deep and versatile toolkit spanning data engineering, ML, cloud infrastructure, and generative AI.</p>
+        </div>
+        <div class="tech-categories reveal-el">
+            <div class="tech-category">
+                <div class="tech-cat-header"><div class="tech-cat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><h3>Big Data &amp; AI</h3></div>
+                <div class="tech-tags">
+                    <span class="tech-tag"><i class="devicon-python-plain"></i> Python</span>
+                    <span class="tech-tag"><i class="devicon-scala-plain"></i> Scala</span>
+                    <span class="tech-tag"><i class="devicon-r-plain"></i> R</span>
+                    <span class="tech-tag"><i class="devicon-apachespark-plain"></i> Spark</span>
+                    <span class="tech-tag"><i class="devicon-hadoop-plain"></i> Hadoop</span>
+                    <span class="tech-tag">Hive</span><span class="tech-tag">HBase</span>
+                    <span class="tech-tag"><i class="devicon-mongodb-plain"></i> MongoDB</span>
+                    <span class="tech-tag">MapReduce</span><span class="tech-tag">ML / DL</span>
+                </div>
+            </div>
+            <div class="tech-category">
+                <div class="tech-cat-header"><div class="tech-cat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg></div><h3>Cloud &amp; DevOps</h3></div>
+                <div class="tech-tags">
+                    <span class="tech-tag"><i class="devicon-amazonwebservices-plain-wordmark"></i> AWS</span>
+                    <span class="tech-tag"><i class="devicon-azure-plain"></i> Azure</span>
+                    <span class="tech-tag"><i class="devicon-googlecloud-plain"></i> GCP</span>
+                    <span class="tech-tag"><i class="devicon-docker-plain"></i> Docker</span>
+                    <span class="tech-tag"><i class="devicon-kubernetes-plain"></i> Kubernetes</span>
+                    <span class="tech-tag"><i class="devicon-terraform-plain"></i> Terraform</span>
+                    <span class="tech-tag">Databricks</span><span class="tech-tag">BigQuery</span>
+                    <span class="tech-tag">Vertex AI</span><span class="tech-tag">SageMaker</span>
+                    <span class="tech-tag">Data Factory</span><span class="tech-tag">Synapse</span>
+                </div>
+            </div>
+            <div class="tech-category">
+                <div class="tech-cat-header"><div class="tech-cat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h3>Visualization &amp; BI</h3></div>
+                <div class="tech-tags"><span class="tech-tag">Tableau</span><span class="tech-tag">QlikView</span><span class="tech-tag">BigML</span><span class="tech-tag">H2O</span><span class="tech-tag">MLflow</span></div>
+            </div>
+            <div class="tech-category">
+                <div class="tech-cat-header"><div class="tech-cat-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><h3>GenAI &amp; Agents</h3></div>
+                <div class="tech-tags"><span class="tech-tag">LangChain</span><span class="tech-tag">LangGraph</span><span class="tech-tag">LangSmith</span><span class="tech-tag">AutoGen</span><span class="tech-tag">CrewAI</span><span class="tech-tag">OpenAI SDK</span><span class="tech-tag">MCP</span><span class="tech-tag">n8n</span><span class="tech-tag">RAG</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="experience" id="experience">
+    <div class="section-container">
+        <div class="section-header reveal-el">
+            <div class="section-tag"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Experience</div>
+            <h2 class="section-title">Career <em>timeline</em></h2>
+        </div>
+        <div class="timeline-items reveal-el">
+            <div class="timeline-item"><div class="timeline-date">Sep 2024 — Present</div><div class="timeline-role">AI Architect</div><div class="timeline-company">Indra</div><div class="timeline-details"><strong>EUCINF</strong> — End-to-end ML platform on GCP for analyzing social network data to detect geopolitical trends. NLP-based sentiment analysis, GDPR compliance across 10 European countries.<br><br><strong>AIDA</strong> — Distributed multi-agent AI architecture for autonomous cyber threat detection on AWS. LLM reasoning via Amazon Bedrock. Coordination across 15 international teams.</div><div class="timeline-tags"><span class="timeline-tag">GCP</span><span class="timeline-tag">AWS</span><span class="timeline-tag">Vertex AI</span><span class="timeline-tag">Bedrock</span><span class="timeline-tag">Multi-Agent AI</span></div></div>
+            <div class="timeline-item"><div class="timeline-date">Sep 2022 — Sep 2024</div><div class="timeline-role">MLOps &amp; Data Lake Development Manager</div><div class="timeline-company">JTI (Japan Tobacco International)</div><div class="timeline-details">Enterprise ML infrastructure in Azure. Data Lake with Data Mesh principles. GenAI initiatives including RAG knowledge assistants and LLM document search. LLMOps practices across 5 countries.</div><div class="timeline-tags"><span class="timeline-tag">Azure</span><span class="timeline-tag">MLflow</span><span class="timeline-tag">RAG</span><span class="timeline-tag">Terraform</span><span class="timeline-tag">Data Mesh</span></div></div>
+            <div class="timeline-item"><div class="timeline-date">Apr 2020 — Sep 2022</div><div class="timeline-role">Big Data Architect</div><div class="timeline-company">Babel — Orange &amp; Canal Isabel II</div><div class="timeline-details">AI-driven customer analytics and churn prediction for Orange. Azure data platform with IoT ingestion and predictive maintenance for Canal Isabel II.</div><div class="timeline-tags"><span class="timeline-tag">Spark</span><span class="timeline-tag">AWS EMR</span><span class="timeline-tag">Databricks</span><span class="timeline-tag">IoT</span></div></div>
+            <div class="timeline-item"><div class="timeline-date">Sep 2018 — Apr 2020</div><div class="timeline-role">Big Data Architect</div><div class="timeline-company">Paradigma Digital — Gas Natural, Iberdrola, Mutua Madrileña</div><div class="timeline-details">Azure cloud architectures, AI model deployment, and data lake design for major energy and insurance companies.</div><div class="timeline-tags"><span class="timeline-tag">Azure</span><span class="timeline-tag">AI Models</span></div></div>
+            <div class="timeline-item"><div class="timeline-date">Jun 2017 — Sep 2018</div><div class="timeline-role">Big Data Engineer / Data Scientist</div><div class="timeline-company">Banco Popular</div><div class="timeline-details">ML models with R, Python, ARIMA within Cloudera. Analytical solutions using QlikView, Hive, and Spark.</div><div class="timeline-tags"><span class="timeline-tag">R</span><span class="timeline-tag">Python</span><span class="timeline-tag">Cloudera</span></div></div>
+            <div class="timeline-item"><div class="timeline-date">Sep 2015 — Mar 2017</div><div class="timeline-role">Big Data Architect</div><div class="timeline-company">Everis (NTT Data) — Banco Santander</div><div class="timeline-details">Data lake transformations with Kafka, HBase, Scala, Hive, and Spark Streaming on Cloudera.</div><div class="timeline-tags"><span class="timeline-tag">Kafka</span><span class="timeline-tag">HBase</span><span class="timeline-tag">Spark Streaming</span></div></div>
+        </div>
+    </div>
+</section>
+
+<section class="education" id="education">
+    <div class="section-container">
+        <div class="section-header reveal-el">
+            <div class="section-tag"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/></svg> Education</div>
+            <h2 class="section-title">Academic <em>background</em></h2>
+        </div>
+        <div class="edu-grid reveal-el">
+            <div class="edu-card"><div class="edu-year">1987 — 1992</div><h3>Electronic &amp; Automation Engineering</h3><p>University of the Basque Country</p></div>
+            <div class="edu-card"><div class="edu-year">2008 — 2012</div><h3>Business Administration</h3><p>UNED (Open University)</p></div>
+            <div class="edu-card"><div class="edu-year">2009 — 2010</div><h3>Master — Stock Markets &amp; Financial Derivatives</h3><p>UNED — Graduated with distinction</p></div>
+            <div class="edu-card"><div class="edu-year">2020</div><h3>Master in Cloud Computing</h3><p>CICE — Azure, AWS, GCP</p></div>
+            <div class="edu-card"><div class="edu-year">2015</div><h3>Master — Big Data &amp; Business Intelligence</h3><p>CICE, Madrid</p></div>
+        </div>
+        <h3 class="certs-title reveal-el">Certifications</h3>
+        <div class="certs-grid reveal-el">
+            <div class="cert-badge"><span class="cert-icon cert-aws">A</span> AWS Certified Data Analytics — Specialty</div>
+            <div class="cert-badge"><span class="cert-icon cert-azure">Az</span> AZ-303 Azure Architect Technologies</div>
+            <div class="cert-badge"><span class="cert-icon cert-azure">Az</span> AZ-304 Azure Architect Design</div>
+            <div class="cert-badge"><span class="cert-icon cert-azure">Az</span> DP-203 Azure Data Engineer</div>
+            <div class="cert-badge"><span class="cert-icon cert-gcp">G</span> Google Cloud Data Engineer</div>
+            <div class="cert-badge"><span class="cert-icon cert-ai">AI</span> Generative AI Fundamentals</div>
+            <div class="cert-badge"><span class="cert-icon cert-ai">ML</span> Machine Learning — Stanford (2015)</div>
+            <div class="cert-badge"><span class="cert-icon cert-ai">Ag</span> MCP Masterclass — Python (2025)</div>
+            <div class="cert-badge"><span class="cert-icon cert-ai">Ag</span> Agentic AI Engineering (2025)</div>
+            <div class="cert-badge"><span class="cert-icon cert-ai">LM</span> LLM Engineering — Master AI &amp; Agents (2025)</div>
+        </div>
+    </div>
+</section>
+
+<section class="projects" id="projects">
+    <div class="section-container">
+        <div class="section-header reveal-el">
+            <div class="section-tag"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg> Projects</div>
+            <h2 class="section-title">Personal <em>work</em></h2>
+        </div>
+        <div class="projects-grid reveal-el">
+            <div class="project-card">
+                <h3>Custom Web Chatbot</h3>
+                <div class="project-year">2025</div>
+                <ul>
+                    <li>AI chatbot integrated into websites using n8n workflows, OpenAI API, and custom HTML embedding</li>
+                    <li>RAG pipelines for context retrieval and multi-turn conversation memory</li>
+                    <li>Scalable deployment using Docker and API endpoints for integration into multiple sites</li>
+                </ul>
+                <div class="timeline-tags" style="margin-top: 1rem;"><span class="timeline-tag">n8n</span><span class="timeline-tag">OpenAI API</span><span class="timeline-tag">RAG</span><span class="timeline-tag">Docker</span></div>
+            </div>
+            <div class="project-card">
+                <h3>AI-Generated Portfolio Website</h3>
+                <div class="project-year">2025</div>
+                <ul>
+                    <li>Designed and orchestrated a multi-agent AI system using CrewAI to collaboratively generate this portfolio website</li>
+                    <li>Three specialized agents — Web Designer, Frontend Developer, and Quality Reviewer — working in sequence to plan, build, and refine the final output</li>
+                    <li>Knowledge-driven generation: agents read structured CV data and user preferences to produce personalized, production-ready HTML/CSS</li>
+                    <li>Full project architecture designed from scratch, including agent roles, task pipelines, and output validation</li>
+                </ul>
+                <div class="timeline-tags" style="margin-top: 1rem;"><span class="timeline-tag">CrewAI</span><span class="timeline-tag">Multi-Agent AI</span><span class="timeline-tag">GPT-4o</span><span class="timeline-tag">Python</span></div>
+                <div class="project-meta">This website was generated by collaborative AI agents in a pipeline I designed</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT with working form -->
+<section class="contact" id="contact">
+    <div class="section-container">
+        <div class="contact-grid reveal-el">
+            <div class="contact-text">
+                <div class="section-tag"><svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Contact</div>
+                <h3>Let's build something <em>together</em></h3>
+                <p>Open to consulting, collaboration, and new opportunities in AI architecture, MLOps and Generative AI.</p>
+                <a href="mailto:loreto.gomez.arias.es@gmail.com" class="contact-link"><div class="contact-link-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="contact-link-label">Email</div><div class="contact-link-value">loreto.gomez.arias.es@gmail.com</div></div></a>
+                <a href="tel:+34626148736" class="contact-link"><div class="contact-link-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><div class="contact-link-label">Phone</div><div class="contact-link-value">+34 626 14 87 36</div></div></a>
+                <div class="contact-link" style="cursor:default;"><div class="contact-link-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div><div class="contact-link-label">Skype</div><div class="contact-link-value">loreto6781</div></div></div>
+                <div class="contact-link" style="cursor:default; border-bottom: none;"><div class="contact-link-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="contact-link-label">Location</div><div class="contact-link-value">Madrid, Spain</div></div></div>
+            </div>
+
+            <!-- =============================================
+                 FORMULARIO DE CONTACTO (Formspree)
+                 
+                 INSTRUCCIONES PARA ACTIVARLO:
+                 1. Ve a https://formspree.io y crea una cuenta gratuita
+                 2. Crea un nuevo formulario (te dará un ID tipo "xyzabcde")
+                 3. Reemplaza "TU_ID_FORMSPREE" en la línea de abajo
+                    por tu ID real. Ejemplo:
+                    action="https://formspree.io/f/xyzabcde"
+                 4. Listo — recibirás los mensajes en tu email
+                 
+                 Plan gratuito: 50 envíos/mes, suficiente para empezar.
+                 ============================================= -->
+            <div class="contact-form-wrapper">
+                <h4>Send me a message</h4>
+                <form id="contactForm" action="https://formspree.io/f/xqeygkvd" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" placeholder="AI Consulting / Collaboration / Other">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required placeholder="Tell me about your project or inquiry..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Send message →</button>
+                </form>
+                <div class="form-success" id="formSuccess">
+                    <h4>Message sent!</h4>
+                    <p>Thank you for reaching out. I'll get back to you as soon as possible.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer><p>© 2025 Loreto Gómez Arias. Built with purpose.</p></footer>
+
+<script>
+// Nav toggle
+document.getElementById('navToggle').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('open'); });
+document.querySelectorAll('.nav-links a').forEach(a => { a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')); });
+
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }); }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal-el').forEach(el => observer.observe(el));
+
+// Form submission with Formspree (AJAX for better UX)
+const form = document.getElementById('contactForm');
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+            form.style.display = 'none';
+            document.getElementById('formSuccess').style.display = 'block';
+        } else {
+            btn.textContent = 'Error — try again';
+            btn.disabled = false;
+        }
+    } catch (err) {
+        btn.textContent = 'Error — try again';
+        btn.disabled = false;
+    }
+});
+</script>
+</body>
+</html>
