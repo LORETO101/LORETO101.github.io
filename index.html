@@ -176,20 +176,11 @@
         .contact-link-value { font-size: 0.95rem; font-weight: 500; }
 
         /* CONTACT FORM */
-        .contact-form-wrapper {
-            padding: 2.5rem; border-radius: 16px;
-            background: var(--bg-card-alt);
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-sm);
-        }
+        .contact-form-wrapper { padding: 2.5rem; border-radius: 16px; background: var(--bg-card-alt); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
         .contact-form-wrapper h4 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 1.25rem; }
         .form-group { margin-bottom: 1rem; }
         .form-group label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem; }
-        .form-group input, .form-group textarea {
-            width: 100%; padding: 0.8rem 1rem; font-family: var(--font-body); font-size: 0.92rem;
-            background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
-            color: var(--text-primary); transition: border-color 0.3s, box-shadow 0.3s; outline: none;
-        }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.8rem 1rem; font-family: var(--font-body); font-size: 0.92rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); transition: border-color 0.3s, box-shadow 0.3s; outline: none; }
         .form-group input:focus, .form-group textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(45,106,79,0.08); }
         .form-group textarea { resize: vertical; min-height: 100px; }
         .form-success { display: none; padding: 1.5rem; text-align: center; }
@@ -203,6 +194,59 @@
         .reveal-el { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
         .reveal-el.visible { opacity: 1; transform: translateY(0); }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ── CHAT WIDGET ── */
+        #chat-bubble {
+            position: fixed; bottom: 20px; right: 20px;
+            width: 60px; height: 60px;
+            background-color: #4A90E2; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 9999; transition: transform 0.3s;
+        }
+        #chat-bubble:hover { transform: scale(1.1); }
+
+        #chat-panel {
+            position: fixed; bottom: 90px; right: 20px;
+            width: 380px; height: 560px;
+            border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+            overflow: hidden; display: none; flex-direction: column;
+            z-index: 9998; background: #fff; border: 1px solid #dde3ef;
+        }
+        #chat-panel-header {
+            background: #4A90E2; color: white;
+            padding: 12px 16px; display: flex; align-items: center;
+            justify-content: space-between; font-family: sans-serif;
+            font-size: 15px; font-weight: 600; flex-shrink: 0;
+        }
+        #chat-panel-header button {
+            background: none; border: none; color: white;
+            font-size: 20px; cursor: pointer; line-height: 1;
+        }
+        #chat-iframe { flex: 1; width: 100%; border: none; }
+
+        /* Overlay de carga */
+        #chat-loading {
+            position: absolute; top: 52px; left: 0; right: 0; bottom: 0;
+            background: #f0f4ff; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 12px;
+            font-family: sans-serif; color: #555; font-size: 14px;
+            z-index: 10; text-align: center; padding: 20px;
+        }
+        #chat-loading.hidden { display: none; }
+        .spinner {
+            width: 36px; height: 36px;
+            border: 4px solid #c7d9f8; border-top-color: #4A90E2;
+            border-radius: 50%; animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #chat-loading small { color: #888; font-size: 12px; line-height: 1.5; }
+        #open-direct {
+            margin-top: 4px; padding: 8px 16px;
+            background: #4A90E2; color: white; border: none;
+            border-radius: 8px; font-size: 13px; cursor: pointer;
+            display: none;
+        }
 
         /* RESPONSIVE */
         @media (max-width: 1024px) {
@@ -225,10 +269,12 @@
             .hero-ctas { flex-direction: column; }
             .btn { width: 100%; justify-content: center; }
             .hero-photo { width: 150px; height: 150px; }
+            #chat-panel { width: calc(100vw - 40px); }
         }
     </style>
 </head>
 <body>
+
 <nav>
     <a href="#hero" class="nav-logo">L<span>.</span>G<span>.</span>A</a>
     <ul class="nav-links" id="navLinks">
@@ -410,7 +456,6 @@
     </div>
 </section>
 
-<!-- CONTACT with working form -->
 <section class="contact" id="contact">
     <div class="section-container">
         <div class="contact-grid reveal-el">
@@ -423,39 +468,13 @@
                 <div class="contact-link" style="cursor:default;"><div class="contact-link-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div><div class="contact-link-label">Skype</div><div class="contact-link-value">loreto6781</div></div></div>
                 <div class="contact-link" style="cursor:default; border-bottom: none;"><div class="contact-link-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="contact-link-label">Location</div><div class="contact-link-value">Madrid, Spain</div></div></div>
             </div>
-
-            <!-- =============================================
-                 FORMULARIO DE CONTACTO (Formspree)
-                 
-                 INSTRUCCIONES PARA ACTIVARLO:
-                 1. Ve a https://formspree.io y crea una cuenta gratuita
-                 2. Crea un nuevo formulario (te dará un ID tipo "xyzabcde")
-                 3. Reemplaza "TU_ID_FORMSPREE" en la línea de abajo
-                    por tu ID real. Ejemplo:
-                    action="https://formspree.io/f/xyzabcde"
-                 4. Listo — recibirás los mensajes en tu email
-                 
-                 Plan gratuito: 50 envíos/mes, suficiente para empezar.
-                 ============================================= -->
             <div class="contact-form-wrapper">
                 <h4>Send me a message</h4>
                 <form id="contactForm" action="https://formspree.io/f/xqeygkvd" method="POST">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required placeholder="Your name">
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required placeholder="your@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" placeholder="AI Consulting / Collaboration / Other">
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" required placeholder="Tell me about your project or inquiry..."></textarea>
-                    </div>
+                    <div class="form-group"><label for="name">Name</label><input type="text" id="name" name="name" required placeholder="Your name"></div>
+                    <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" required placeholder="your@email.com"></div>
+                    <div class="form-group"><label for="subject">Subject</label><input type="text" id="subject" name="subject" placeholder="AI Consulting / Collaboration / Other"></div>
+                    <div class="form-group"><label for="message">Message</label><textarea id="message" name="message" required placeholder="Tell me about your project or inquiry..."></textarea></div>
                     <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">Send message →</button>
                 </form>
                 <div class="form-success" id="formSuccess">
@@ -469,177 +488,86 @@
 
 <footer><p>© 2025 Loreto Gómez Arias. Built with purpose.</p></footer>
 
-<script>
-// Nav toggle
-document.getElementById('navToggle').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('open'); });
-document.querySelectorAll('.nav-links a').forEach(a => { a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')); });
-
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }); }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-document.querySelectorAll('.reveal-el').forEach(el => observer.observe(el));
-
-// Form submission with Formspree (AJAX for better UX)
-const form = document.getElementById('contactForm');
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = form.querySelector('button[type="submit"]');
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
-
-    try {
-        const response = await fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: { 'Accept': 'application/json' }
-        });
-
-        if (response.ok) {
-            form.style.display = 'none';
-            document.getElementById('formSuccess').style.display = 'block';
-        } else {
-            btn.textContent = 'Error — try again';
-            btn.disabled = false;
-        }
-    } catch (err) {
-        btn.textContent = 'Error — try again';
-        btn.disabled = false;
-    }
-});
-</script>
-<style>
-    /* ── Botón flotante ── */
-    #chat-bubble {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
-      background-color: #4A90E2;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      z-index: 9999;
-      transition: transform 0.3s;
-    }
-    #chat-bubble:hover { transform: scale(1.1); }
-
-    /* ── Panel fijo del chat ── */
-    #chat-panel {
-      position: fixed;
-      bottom: 90px;          /* justo encima del botón */
-      right: 20px;
-      width: 380px;
-      height: 560px;
-      border-radius: 16px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-      overflow: hidden;
-      display: none;          /* oculto por defecto */
-      flex-direction: column;
-      z-index: 9998;
-      background: #fff;
-      border: 1px solid #dde3ef;
-    }
-
-    /* Cabecera del panel */
-    #chat-panel-header {
-      background: #4A90E2;
-      color: white;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-family: sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-    }
-    #chat-panel-header button {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 20px;
-      cursor: pointer;
-      line-height: 1;
-    }
-
-    /* iframe que carga el chatbot */
-    #chat-iframe {
-      flex: 1;
-      width: 100%;
-      border: none;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Panel fijo -->
-  <div id="chat-panel">
+<!-- ── CHAT WIDGET ── -->
+<div id="chat-panel">
     <div id="chat-panel-header">
-      <span>💬 Mi Chatbot</span>
-      <button onclick="toggleChat()" title="Cerrar">✕</button>
+        <span>💬 Mi Chatbot</span>
+        <button onclick="toggleChat()" title="Cerrar">✕</button>
     </div>
-    <iframe
-      id="chat-iframe"
-      src=""
-      allow="microphone"
-      loading="lazy">
-    </iframe>
-  </div>
+    <div id="chat-loading">
+        <div class="spinner"></div>
+        <span>Cargando chatbot...</span>
+        <small>Los Spaces de HuggingFace pueden tardar<br>unos segundos en arrancar.</small>
+        <button id="open-direct" onclick="openDirect()">Abrir en ventana nueva</button>
+    </div>
+    <iframe id="chat-iframe" src="" frameborder="0" allow="microphone"></iframe>
+</div>
 
-  <!-- Botón flotante -->
-  <div id="chat-bubble" onclick="toggleChat()">
+<div id="chat-bubble" onclick="toggleChat()">
     <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
-      <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
     </svg>
-  </div>
+</div>
 
-  <script>
+<script>
+    // Nav toggle
+    document.getElementById('navToggle').addEventListener('click', () => { document.getElementById('navLinks').classList.toggle('open'); });
+    document.querySelectorAll('.nav-links a').forEach(a => { a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')); });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }); }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal-el').forEach(el => observer.observe(el));
+
+    // Form submission
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+        try {
+            const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+            if (response.ok) { form.style.display = 'none'; document.getElementById('formSuccess').style.display = 'block'; }
+            else { btn.textContent = 'Error — try again'; btn.disabled = false; }
+        } catch (err) { btn.textContent = 'Error — try again'; btn.disabled = false; }
+    });
+
+    // Chat widget
     const CHATBOT_URL = "https://loreto100-mychatbot.hf.space";
     let isOpen = false;
     let loadTimeout = null;
 
     function toggleChat() {
-      const panel   = document.getElementById("chat-panel");
-      const iframe  = document.getElementById("chat-iframe");
-      const loading = document.getElementById("chat-loading");
-      const btn     = document.getElementById("open-direct");
+        const panel   = document.getElementById("chat-panel");
+        const iframe  = document.getElementById("chat-iframe");
+        const loading = document.getElementById("chat-loading");
+        const btn     = document.getElementById("open-direct");
 
-      isOpen = !isOpen;
+        isOpen = !isOpen;
 
-      if (isOpen) {
-        panel.style.display = "flex";
+        if (isOpen) {
+            panel.style.display = "flex";
+            loading.classList.remove("hidden");
+            btn.style.display = "none";
 
-        // Mostrar overlay de carga
-        loading.classList.remove("hidden");
-        btn.style.display = "none";
-
-        // Cargar iframe solo la primera vez
-        if (!iframe.src || iframe.src === window.location.href) {
-          iframe.src = CHATBOT_URL;
+            if (!iframe.src || iframe.src === window.location.href) {
+                iframe.src = CHATBOT_URL;
+            }
+            iframe.onload = () => {
+                loading.classList.add("hidden");
+                clearTimeout(loadTimeout);
+            };
+            loadTimeout = setTimeout(() => { btn.style.display = "block"; }, 8000);
+        } else {
+            panel.style.display = "none";
+            clearTimeout(loadTimeout);
         }
-
-        // Escuchar cuando el iframe termina de cargar
-        iframe.onload = () => {
-          loading.classList.add("hidden");
-          clearTimeout(loadTimeout);
-        };
-
-        // Si tarda más de 8s, mostrar botón de fallback
-        loadTimeout = setTimeout(() => {
-          btn.style.display = "block";
-        }, 8000);
-
-      } else {
-        panel.style.display = "none";
-        clearTimeout(loadTimeout);
-      }
     }
 
     function openDirect() {
-      window.open(CHATBOT_URL, "_blank", "width=420,height=620");
+        window.open(CHATBOT_URL, "_blank", "width=420,height=620");
     }
-  </script>
+</script>
+
 </body>
 </html>
