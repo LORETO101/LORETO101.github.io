@@ -524,52 +524,21 @@ form.addEventListener('submit', async (e) => {
         transition: transform 0.3s;
     }
     #chat-bubble:hover { transform: scale(1.1); }
-    
-    #chat-window {
-        display: none;
-        position: fixed;
-        bottom: 90px;
-        right: 20px;
-        width: 350px;
-        height: 500px;
-        border-radius: 15px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        z-index: 9999;
-        background: white;
-        border: 1px solid #ddd;
-    }
-    /* Adaptación para móviles */
-    @media (max-width: 450px) {
-        #chat-window {
-            width: 90%;
-            height: 70%;
-            right: 5%;
-        }
-    }
 </style>
 
-<div id="chat-bubble" onclick="toggleChat()">
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-</div>
-
-<div id="chat-window">
-    <iframe
-        src="https://huggingface.co/spaces/LORETO100/mychatbot"
-        frameborder="0"
-        width="100%"
-        height="100%">
-    </iframe>
+<div id="chat-bubble" onclick="openChat()">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+    </svg>
 </div>
 
 <script>
-    function toggleChat() {
-        var win = document.getElementById('chat-window');
-        if (win.style.display === 'none' || win.style.display === '') {
-            win.style.display = 'block';
-        } else {
-            win.style.display = 'none';
-        }
+    function openChat() {
+        window.open(
+            "https://huggingface.co/spaces/LORETO100/mychatbot", 
+            "_blank", 
+            "width=400,height=600,resizable=yes,scrollbars=yes"
+        );
     }
 </script>
 </body>
