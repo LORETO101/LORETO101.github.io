@@ -598,22 +598,47 @@ form.addEventListener('submit', async (e) => {
   <script>
     const CHATBOT_URL = "https://loreto100-mychatbot.hf.space";
     let isOpen = false;
+    let loadTimeout = null;
 
     function toggleChat() {
-      const panel  = document.getElementById("chat-panel");
-      const iframe = document.getElementById("chat-iframe");
+      const panel   = document.getElementById("chat-panel");
+      const iframe  = document.getElementById("chat-iframe");
+      const loading = document.getElementById("chat-loading");
+      const btn     = document.getElementById("open-direct");
 
       isOpen = !isOpen;
 
       if (isOpen) {
-        // Carga la URL solo la primera vez (evita recargas innecesarias)
+        panel.style.display = "flex";
+
+        // Mostrar overlay de carga
+        loading.classList.remove("hidden");
+        btn.style.display = "none";
+
+        // Cargar iframe solo la primera vez
         if (!iframe.src || iframe.src === window.location.href) {
           iframe.src = CHATBOT_URL;
         }
-        panel.style.display = "flex";
+
+        // Escuchar cuando el iframe termina de cargar
+        iframe.onload = () => {
+          loading.classList.add("hidden");
+          clearTimeout(loadTimeout);
+        };
+
+        // Si tarda más de 8s, mostrar botón de fallback
+        loadTimeout = setTimeout(() => {
+          btn.style.display = "block";
+        }, 8000);
+
       } else {
         panel.style.display = "none";
+        clearTimeout(loadTimeout);
       }
+    }
+
+    function openDirect() {
+      window.open(CHATBOT_URL, "_blank", "width=420,height=620");
     }
   </script>
 </body>
