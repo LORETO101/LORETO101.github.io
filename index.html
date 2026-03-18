@@ -507,39 +507,114 @@ form.addEventListener('submit', async (e) => {
 });
 </script>
 <style>
+    /* ── Botón flotante ── */
     #chat-bubble {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 60px;
-        height: 60px;
-        background-color: #4A90E2;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        z-index: 9999;
-        transition: transform 0.3s;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #4A90E2;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      z-index: 9999;
+      transition: transform 0.3s;
     }
     #chat-bubble:hover { transform: scale(1.1); }
-</style>
 
-<div id="chat-bubble" onclick="openChat()">
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
-        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
-    </svg>
-</div>
-
-<script>
-    function openChat() {
-        window.open(
-            "https://huggingface.co/spaces/LORETO100/mychatbot", 
-            "_blank", 
-            "width=400,height=600,resizable=yes,scrollbars=yes"
-        );
+    /* ── Panel fijo del chat ── */
+    #chat-panel {
+      position: fixed;
+      bottom: 90px;          /* justo encima del botón */
+      right: 20px;
+      width: 380px;
+      height: 560px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      overflow: hidden;
+      display: none;          /* oculto por defecto */
+      flex-direction: column;
+      z-index: 9998;
+      background: #fff;
+      border: 1px solid #dde3ef;
     }
-</script>
+
+    /* Cabecera del panel */
+    #chat-panel-header {
+      background: #4A90E2;
+      color: white;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    #chat-panel-header button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    /* iframe que carga el chatbot */
+    #chat-iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Panel fijo -->
+  <div id="chat-panel">
+    <div id="chat-panel-header">
+      <span>💬 Mi Chatbot</span>
+      <button onclick="toggleChat()" title="Cerrar">✕</button>
+    </div>
+    <iframe
+      id="chat-iframe"
+      src=""
+      allow="microphone"
+      loading="lazy">
+    </iframe>
+  </div>
+
+  <!-- Botón flotante -->
+  <div id="chat-bubble" onclick="toggleChat()">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+      <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+    </svg>
+  </div>
+
+  <script>
+    const CHATBOT_URL = "https://loreto100-mychatbot.hf.space";
+    let isOpen = false;
+
+    function toggleChat() {
+      const panel  = document.getElementById("chat-panel");
+      const iframe = document.getElementById("chat-iframe");
+
+      isOpen = !isOpen;
+
+      if (isOpen) {
+        // Carga la URL solo la primera vez (evita recargas innecesarias)
+        if (!iframe.src || iframe.src === window.location.href) {
+          iframe.src = CHATBOT_URL;
+        }
+        panel.style.display = "flex";
+      } else {
+        panel.style.display = "none";
+      }
+    }
+  </script>
 </body>
 </html>
