@@ -489,21 +489,7 @@
 <footer><p>© 2025 Loreto Gómez Arias. Built with purpose.</p></footer>
 
 <!-- ── CHAT WIDGET ── -->
-<div id="chat-panel">
-    <div id="chat-panel-header">
-        <span>💬 Mi Chatbot</span>
-        <button onclick="toggleChat()" title="Cerrar">✕</button>
-    </div>
-    <div id="chat-loading">
-        <div class="spinner"></div>
-        <span>Cargando chatbot...</span>
-        <small>Los Spaces de HuggingFace pueden tardar<br>unos segundos en arrancar.</small>
-        <button id="open-direct" onclick="openDirect()">Abrir en ventana nueva</button>
-    </div>
-    <iframe id="chat-iframe" src="" frameborder="0" allow="microphone"></iframe>
-</div>
-
-<div id="chat-bubble" onclick="toggleChat()">
+<div id="chat-bubble" onclick="openChat()">
     <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
         <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
     </svg>
@@ -532,40 +518,24 @@
         } catch (err) { btn.textContent = 'Error — try again'; btn.disabled = false; }
     });
 
-    // Chat widget
+    // Chat widget — popup centrado (HuggingFace bloquea iframe)
     const CHATBOT_URL = "https://loreto100-mychatbot.hf.space";
-    let isOpen = false;
-    let loadTimeout = null;
+    let chatWindow = null;
 
-    function toggleChat() {
-        const panel   = document.getElementById("chat-panel");
-        const iframe  = document.getElementById("chat-iframe");
-        const loading = document.getElementById("chat-loading");
-        const btn     = document.getElementById("open-direct");
+    function openChat() {
+        const w = 420, h = 640;
+        const left = window.screenX + window.outerWidth  - w - 20;
+        const top  = window.screenY + window.outerHeight - h - 60;
 
-        isOpen = !isOpen;
-
-        if (isOpen) {
-            panel.style.display = "flex";
-            loading.classList.remove("hidden");
-            btn.style.display = "none";
-
-            if (!iframe.src || iframe.src === window.location.href) {
-                iframe.src = CHATBOT_URL;
-            }
-            iframe.onload = () => {
-                loading.classList.add("hidden");
-                clearTimeout(loadTimeout);
-            };
-            loadTimeout = setTimeout(() => { btn.style.display = "block"; }, 8000);
-        } else {
-            panel.style.display = "none";
-            clearTimeout(loadTimeout);
+        if (chatWindow && !chatWindow.closed) {
+            chatWindow.focus();
+            return;
         }
-    }
-
-    function openDirect() {
-        window.open(CHATBOT_URL, "_blank", "width=420,height=620");
+        chatWindow = window.open(
+            CHATBOT_URL,
+            "chatbot",
+            `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`
+        );
     }
 </script>
 
