@@ -680,4 +680,11 @@
     function openChat() {
         const w = 420, h = 640;
         const left = window.screenX + window.outerWidth  - w - 20;
-        const top  = window.screenY + window.out
+        const top  = window.screenY + window.outerHeight - h - 60;
+        if (chatWindow && !chatWindow.closed) { chatWindow.focus(); return; }
+        chatWindow = window.open(CHATBOT_URL, "chatbot", `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes`);
+    }
+</script>
+
+</body>
+</html>
